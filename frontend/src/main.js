@@ -29,7 +29,8 @@ var render = Render.create({
     options: {
         // width: 800,
         // height: 600,
-        showAngleIndicator: true
+        showAngleIndicator: true,
+        wireframes: false
     }
 });
 
@@ -44,7 +45,7 @@ var is_off_screen = body => body.position.x > 800 ||
                             body.position.y > 600 ||
                             body.position.y < 0;
 
-var NUMBER_OF_BODIES = 4;
+var NUMBER_OF_BODIES = 10;
 
 var bodies = Array(NUMBER_OF_BODIES).fill().map(() => {
   var size = Common.random(10, 20);
@@ -55,9 +56,48 @@ var bodies = Array(NUMBER_OF_BODIES).fill().map(() => {
 
 World.add(world, bodies);
 
-Events.on(render, "afterRender", event => {
-  document.getElementById("offscreen").innerHTML = bodies.filter(is_off_screen).map(i => i.id).join(', ');
+Events.on(render, "afterRender", event =>
+  document.getElementById("offscreen").innerHTML = bodies.filter(is_off_screen)
+                                                         .map(i => i.id)
+                                                         .join(', '));
+
+Events.on(engine, 'collisionStart', function(event) {
+       var pairs = event.pairs;
+
+       // change object colours to show those starting a collision
+       for (var i = 0; i < pairs.length; i++) {
+           var pair = pairs[i];
+           pair.bodyA.render.fillStyle = '#333';
+           pair.bodyB.render.fillStyle = '#333';
+       }
+   });
+
+// an example of using collisionActive event on an engine
+Events.on(engine, 'collisionActive', function(event) {
+   var pairs = event.pairs;
+
+   // change object colours to show those in an active collision (e.g. resting contact)
+   for (var i = 0; i < pairs.length; i++) {
+       var pair = pairs[i];
+       pair.bodyA.render.fillStyle = '#333';
+       pair.bodyB.render.fillStyle = '#333';
+   }
 });
+
+// an example of using collisionEnd event on an engine
+Events.on(engine, 'collisionEnd', function(event) {
+   var pairs = event.pairs;
+
+   // change object colours to show those ending a collision
+   for (var i = 0; i < pairs.length; i++) {
+       var pair = pairs[i];
+
+       pair.bodyA.render.fillStyle = '#222';
+       pair.bodyB.render.fillStyle = '#222';
+   }
+});
+
+var bodyStyle = { fillStyle: '#222' };
 
 // add mouse control
 var mouse = Mouse.create(render.canvas),
