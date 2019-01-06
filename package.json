@@ -1,0 +1,24 @@
+{
+  "name": "silver-spork",
+  "version": "1.0.0",
+  "description": "A collection of games",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Innoviox/silver-spork.git"
+  },
+  "author": "Simon Chervenak",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Innoviox/silver-spork/issues"
+  },
+  "homepage": "https://github.com/Innoviox/silver-spork#readme",
+  "dependencies": {
+    "webpack": "^4.5.0",
+    "webpack-cli": "^2.0.14",
+    "webpack-dev-server": "^3.1.3"
+  }
+}
