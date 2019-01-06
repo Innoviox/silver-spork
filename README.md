@@ -23,3 +23,18 @@ Python :)
 Java :(
 C# :(
 C++ :|
+
+
+
+# Installation Instructions
+
+1. If you don't have it ready, install [npm](https://www.npmjs.com/get-npm) and some kind of command line.
+
+2. Run the project with:
+
+   ```
+   cd frontend
+   npm install && npm start
+   ```
+
+   and open http://localhost:8080 in your browser.
