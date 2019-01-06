@@ -55,15 +55,9 @@ var bodies = [
 World.add(world, bodies);
 
 Events.on(bodies[0], "sleepStart", function(event) {
-  console.log("oyiajprweoiajeproigjpwr!");
   var pos = bodies[0].position;
-  // bodies[0].force = Matter.Vector.create(.1, .1);
   Matter.Sleeping.set(bodies[0], false);
-  // Body.applyForce(bodies[0], Matter.Vector.create(body.position.x, body.position.y), Matter.Vector.create(.1, .1));
   Body.applyForce( bodies[0], {x: pos.x, y: pos.y}, {x: .01, y: .01} );
-  // Body.setPosition( bodies[0], {x: 100, y: 100} );
-  console.log("applied force!");
-  console.log(bodies[0]);
 });
 
 // add mouse control
