@@ -46,11 +46,12 @@ var is_off_screen = body => body.position.x > 800 ||
                             body.position.y < 0;
 
 var NUMBER_OF_BODIES = 10;
-
+var bodyStyle = { fillStyle: '#0000FF' };
 var bodies = Array(NUMBER_OF_BODIES).fill().map(() => {
   var size = Common.random(10, 20);
   return Bodies.rectangle(Common.random(0, 800), Common.random(0, 600), size, size, {
     force: {x: (Math.random() - 0.5) / 500, y: (Math.random() - 0.5) / 500 },
+    render: bodyStyle
   } );
 });
 
@@ -67,8 +68,8 @@ Events.on(engine, 'collisionStart', function(event) {
        // change object colours to show those starting a collision
        for (var i = 0; i < pairs.length; i++) {
            var pair = pairs[i];
-           pair.bodyA.render.fillStyle = '#333';
-           pair.bodyB.render.fillStyle = '#333';
+           pair.bodyA.render.fillStyle = '#00FF00';
+           pair.bodyB.render.fillStyle = '#00FF00';
        }
    });
 
@@ -79,8 +80,8 @@ Events.on(engine, 'collisionActive', function(event) {
    // change object colours to show those in an active collision (e.g. resting contact)
    for (var i = 0; i < pairs.length; i++) {
        var pair = pairs[i];
-       pair.bodyA.render.fillStyle = '#333';
-       pair.bodyB.render.fillStyle = '#333';
+       pair.bodyA.render.fillStyle = '#FF0000';
+       pair.bodyB.render.fillStyle = '#FF0000';
    }
 });
 
@@ -92,12 +93,10 @@ Events.on(engine, 'collisionEnd', function(event) {
    for (var i = 0; i < pairs.length; i++) {
        var pair = pairs[i];
 
-       pair.bodyA.render.fillStyle = '#222';
-       pair.bodyB.render.fillStyle = '#222';
+       pair.bodyA.render.fillStyle = '#0000FF';
+       pair.bodyB.render.fillStyle = '#0000FF';
    }
 });
-
-var bodyStyle = { fillStyle: '#222' };
 
 // add mouse control
 var mouse = Mouse.create(render.canvas),
