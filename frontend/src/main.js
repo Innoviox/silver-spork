@@ -27,8 +27,8 @@ var render = Render.create({
     element: document.body,
     engine: engine,
     options: {
-        width: 800,
-        height: 600,
+        // width: 800,
+        // height: 600,
         showAngleIndicator: true
     }
 });
@@ -46,19 +46,29 @@ Runner.run(runner, engine);
 //
 // World.add(world, stack);
 
-var bodies = [
-    Bodies.rectangle(0, 0, 20, 20, { force: Matter.Vector.create(.04, .05), density: 0.02 }),
-    Bodies.rectangle(800, 600, 20, 20, { force: Matter.Vector.create(-.06, -.06), density: 0.02 }),
-    // Bodies.rectangle(500, 350, 700, 20, { isStatic: true, angle: -Math.PI * 0.06 }),
-    // Bodies.rectangle(340, 580, 700, 20, { isStatic: true, angle: Math.PI * 0.04 })
-];
+// var bodies = [
+//     Bodies.rectangle(0, 0, 20, 20, { force: Matter.Vector.create(.04, .05), density: 0.02 }),
+//     Bodies.rectangle(800, 600, 20, 20, { force: Matter.Vector.create(-.06, -.06), density: 0.02 }),
+//     // Bodies.rectangle(500, 350, 700, 20, { isStatic: true, angle: -Math.PI * 0.06 }),
+//     // Bodies.rectangle(340, 580, 700, 20, { isStatic: true, angle: Math.PI * 0.04 })
+// ];
+
+var NUMBER_OF_BODIES = 100;
+
+var bodies = Array(NUMBER_OF_BODIES).fill().map(() => {
+  var size = Common.random(10, 20);
+  return Bodies.rectangle(Common.random(0, 800), Common.random(0, 600), size, size, {
+    force: {x: (Math.random() - 0.5) / 500, y: (Math.random() - 0.5) / 500 },
+  } );
+});
+
 World.add(world, bodies);
 
-Events.on(bodies[0], "sleepStart", function(event) {
-  var pos = bodies[0].position;
-  Matter.Sleeping.set(bodies[0], false);
-  Body.applyForce( bodies[0], {x: pos.x, y: pos.y}, {x: .01, y: .01} );
-});
+// Events.on(bodies[0], "sleepStart", function(event) {
+//   var pos = bodies[0].position;
+//   Matter.Sleeping.set(bodies[0], false);
+//   Body.applyForce( bodies[0], {x: pos.x, y: pos.y}, {x: .1, y: .1} );
+// });
 
 // add mouse control
 var mouse = Mouse.create(render.canvas),
@@ -79,24 +89,3 @@ render.mouse = mouse;
 
 // fit the render viewport to the scene
 Render.lookAt(render, Composite.allBodies(world));
-
-// wrapping using matter-wrap plugin
-// for (var i = 0; i < stack.bodies.length; i += 1) {
-//     stack.bodies[i].plugin.wrap = {
-//         min: { x: render.bounds.min.x, y: render.bounds.min.y },
-//         max: { x: render.bounds.max.x, y: render.bounds.max.y }
-//     };
-// }
-//
-//   // context for MatterTools.Demo
-//   return {
-//       engine: engine,
-//       runner: runner,
-//       render: render,
-//       canvas: render.canvas,
-//       stop: function() {
-//           Matter.Render.stop(render);
-//           Matter.Runner.stop(runner);
-//       }
-//   };
-// };
