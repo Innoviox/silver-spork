@@ -15,7 +15,7 @@ var Engine = Matter.Engine,
 
 // create engine
 var engine = Engine.create({
-            enableSleeping: true
+            // enableSleeping: true
         }),
     world = engine.world;
 
@@ -39,21 +39,12 @@ Render.run(render);
 var runner = Runner.create();
 Runner.run(runner, engine);
 
-// add bodies
-// var stack = Composites.stack(20, 20, 20, 5, 0, 0, function(x, y) {
-//     return Bodies.circle(x, y, Common.random(10, 20), { friction: 0.00001, restitution: 0.5, density: 0.001 });
-// });
-//
-// World.add(world, stack);
+var is_off_screen = body => body.position.x > 800 ||
+                            body.position.x < 0 ||
+                            body.position.y > 600 ||
+                            body.position.y < 0;
 
-// var bodies = [
-//     Bodies.rectangle(0, 0, 20, 20, { force: Matter.Vector.create(.04, .05), density: 0.02 }),
-//     Bodies.rectangle(800, 600, 20, 20, { force: Matter.Vector.create(-.06, -.06), density: 0.02 }),
-//     // Bodies.rectangle(500, 350, 700, 20, { isStatic: true, angle: -Math.PI * 0.06 }),
-//     // Bodies.rectangle(340, 580, 700, 20, { isStatic: true, angle: Math.PI * 0.04 })
-// ];
-
-var NUMBER_OF_BODIES = 100;
+var NUMBER_OF_BODIES = 4;
 
 var bodies = Array(NUMBER_OF_BODIES).fill().map(() => {
   var size = Common.random(10, 20);
@@ -64,11 +55,9 @@ var bodies = Array(NUMBER_OF_BODIES).fill().map(() => {
 
 World.add(world, bodies);
 
-// Events.on(bodies[0], "sleepStart", function(event) {
-//   var pos = bodies[0].position;
-//   Matter.Sleeping.set(bodies[0], false);
-//   Body.applyForce( bodies[0], {x: pos.x, y: pos.y}, {x: .1, y: .1} );
-// });
+Events.on(render, "afterRender", event => {
+  document.getElementById("offscreen").innerHTML = bodies.filter(is_off_screen).map(i => i.id).join(', ');
+});
 
 // add mouse control
 var mouse = Mouse.create(render.canvas),
