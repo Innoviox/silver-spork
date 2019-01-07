@@ -62,41 +62,18 @@ Events.on(render, "afterRender", event =>
                                                          .map(i => i.id)
                                                          .join(', '));
 
-Events.on(engine, 'collisionStart', function(event) {
-       var pairs = event.pairs;
+function setPairsColor(color) {
+  return event => {
+    for (var pair of event.pairs) {
+      pair.bodyA.render.fillStyle = color;
+      pair.bodyB.render.fillStyle = color;
+    }
+  }
+}
 
-       // change object colours to show those starting a collision
-       for (var i = 0; i < pairs.length; i++) {
-           var pair = pairs[i];
-           pair.bodyA.render.fillStyle = '#00FF00';
-           pair.bodyB.render.fillStyle = '#00FF00';
-       }
-   });
-
-// an example of using collisionActive event on an engine
-Events.on(engine, 'collisionActive', function(event) {
-   var pairs = event.pairs;
-
-   // change object colours to show those in an active collision (e.g. resting contact)
-   for (var i = 0; i < pairs.length; i++) {
-       var pair = pairs[i];
-       pair.bodyA.render.fillStyle = '#FF0000';
-       pair.bodyB.render.fillStyle = '#FF0000';
-   }
-});
-
-// an example of using collisionEnd event on an engine
-Events.on(engine, 'collisionEnd', function(event) {
-   var pairs = event.pairs;
-
-   // change object colours to show those ending a collision
-   for (var i = 0; i < pairs.length; i++) {
-       var pair = pairs[i];
-
-       pair.bodyA.render.fillStyle = '#0000FF';
-       pair.bodyB.render.fillStyle = '#0000FF';
-   }
-});
+Events.on(engine, 'collisionStart',  setPairsColor('#00FF00'));
+Events.on(engine, 'collisionActive', setPairsColor('#FF0000'));
+Events.on(engine, 'collisionEnd',    setPairsColor('#0000FF'));
 
 // add mouse control
 var mouse = Mouse.create(render.canvas),
