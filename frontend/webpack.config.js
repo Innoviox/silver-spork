@@ -1,5 +1,5 @@
-var path = require('path')
-var webpack = require('webpack')
+var path = require('path');
+var webpack = require('webpack');
 
 module.exports = {
   mode: 'development',
@@ -8,7 +8,8 @@ module.exports = {
 
   output: {
     path: path.join(__dirname, 'public'),
-    filename: 'bundle.js'
+      publicPath: "public/",
+      filename: 'bundle.js'
   },
 
   devServer: {
