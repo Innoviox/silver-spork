@@ -14,17 +14,19 @@ var Engine = Matter.Engine,
     Body = Matter.Body,
     Events = Matter.Events;
 
+Matter.use("matter-wrap");
+
 // create engine
 var engine = Engine.create({
         // enableSleeping: true
     }),
     world = engine.world;
 
-engine.world.gravity.y = 0;
+// engine.world.gravity.y = 0;
 
 // create renderer
 var render = Render.create({
-    element: document.body,
+    element: $("#matter-canvas"),
     engine: engine,
     options: {
         // width: 800,
@@ -50,6 +52,8 @@ var bodyStyle = {
     lineWidth: 0
 };
 
+var wrap = {}
+
 var create_body = () => {
     var size = 20; //Common.random(10, 20);
     return Bodies.rectangle(Common.random(0, 800), Common.random(0, 600), size, size, {
@@ -57,7 +61,19 @@ var create_body = () => {
             x: (Math.random() - 0.5) / 500,
             y: (Math.random() - 0.5) / 500
         },
-        render: bodyStyle
+        render: bodyStyle,
+        plugin: {
+            wrap: {
+                min: {
+                    x: 0,
+                    y: 0
+                },
+                max: {
+                    x: 800,
+                    y: 600
+                }
+            }
+        }
     });
 };
 
@@ -67,7 +83,7 @@ var bodies = Array(NUMBER_OF_BODIES).fill().map(create_body);
 World.add(world, bodies);
 
 Events.on(render, "afterRender", event =>
-    document.getElementById("offscreen").innerHTML = bodies.filter(is_off_screen).map(i => i.id).join(', '));
+    $("#offscreen").innerHTML = bodies.filter(is_off_screen).map(i => i.id).join(', '));
 
 var setPairsColor = color => event => {
     for (var pair of event.pairs) {
@@ -82,14 +98,14 @@ Events.on(engine, 'collisionEnd', setPairsColor('#0000FF'));
 
 Events.on(engine, 'collisionStart', event => {
     for (var pair of event.pairs) {
-        // Body.setVelocity(pair.bodyA, {
-        //     x: 0,
-        //     y: 0
-        // });
-        // Body.setVelocity(pair.bodyB, {
-        //     x: 0,
-        //     y: 0
-        // });
+        Body.setVelocity(pair.bodyA, {
+            x: 0,
+            y: 0
+        });
+        Body.setVelocity(pair.bodyB, {
+            x: 0,
+            y: 0
+        });
     }
 });
 

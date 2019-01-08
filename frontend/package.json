@@ -26,11 +26,13 @@
   "dependencies": {
     "@gamestdio/timer": "^1.1.9",
     "colyseus.js": "^0.9.1",
-    "matter-js": "^0.10.0"
+    "matter-js": "^0.12.0",
+    "matter-tools": "^0.11.1",
+    "matter-wrap": "^0.2.0"
   },
   "babel": {
     "presets": [
-      "es2015"
+      "env"
     ]
   }
 }
