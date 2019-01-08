@@ -1,4 +1,5 @@
 import * as Matter from 'matter-js';
+import Player from './player.js';
 
 var Engine = Matter.Engine,
     Render = Matter.Render,
@@ -68,14 +69,12 @@ World.add(world, bodies);
 Events.on(render, "afterRender", event =>
     document.getElementById("offscreen").innerHTML = bodies.filter(is_off_screen).map(i => i.id).join(', '));
 
-function setPairsColor(color) {
-    return event => {
-        for (var pair of event.pairs) {
-            pair.bodyA.render.fillStyle = color;
-            pair.bodyB.render.fillStyle = color;
-        }
+var setPairsColor = color => event => {
+    for (var pair of event.pairs) {
+        pair.bodyA.render.fillStyle = color;
+        pair.bodyB.render.fillStyle = color;
     }
-}
+};
 
 Events.on(engine, 'collisionStart', setPairsColor('#00FF00'));
 Events.on(engine, 'collisionActive', setPairsColor('#FF0000'));
@@ -91,7 +90,6 @@ Events.on(engine, 'collisionStart', event => {
         //     x: 0,
         //     y: 0
         // });
-        
     }
 });
 
