@@ -1,4 +1,6 @@
 import * as Matter from 'matter-js';
+// import "matter-tools";
+import MatterWrap from "matter-wrap";
 import Player from './player.js';
 
 var Engine = Matter.Engine,
@@ -14,19 +16,18 @@ var Engine = Matter.Engine,
     Body = Matter.Body,
     Events = Matter.Events;
 
-Matter.use("matter-wrap");
-
+Matter.use('matter-wrap');
 // create engine
 var engine = Engine.create({
         // enableSleeping: true
     }),
     world = engine.world;
 
-// engine.world.gravity.y = 0;
+engine.world.gravity.y = 0;
 
 // create renderer
 var render = Render.create({
-    element: $("#matter-canvas"),
+    element: document.body,
     engine: engine,
     options: {
         // width: 800,
@@ -52,27 +53,27 @@ var bodyStyle = {
     lineWidth: 0
 };
 
-var wrap = {}
+var wrap = {
+    min: {
+        x: 100,
+        y: 100
+    },
+    max: {
+        x: 500,
+        y: 500
+    }
+};
 
 var create_body = () => {
     var size = 20; //Common.random(10, 20);
-    return Bodies.rectangle(Common.random(0, 800), Common.random(0, 600), size, size, {
+    return Bodies.rectangle(Common.random(100, 500), Common.random(100, 500), size, size, {
         force: {
             x: (Math.random() - 0.5) / 500,
             y: (Math.random() - 0.5) / 500
         },
         render: bodyStyle,
         plugin: {
-            wrap: {
-                min: {
-                    x: 0,
-                    y: 0
-                },
-                max: {
-                    x: 800,
-                    y: 600
-                }
-            }
+            wrap: wrap
         }
     });
 };
@@ -98,14 +99,14 @@ Events.on(engine, 'collisionEnd', setPairsColor('#0000FF'));
 
 Events.on(engine, 'collisionStart', event => {
     for (var pair of event.pairs) {
-        Body.setVelocity(pair.bodyA, {
-            x: 0,
-            y: 0
-        });
-        Body.setVelocity(pair.bodyB, {
-            x: 0,
-            y: 0
-        });
+        // Body.setVelocity(pair.bodyA, {
+        //     x: 0,
+        //     y: 0
+        // });
+        // Body.setVelocity(pair.bodyB, {
+        //     x: 0,
+        //     y: 0
+        // });
     }
 });
 
@@ -127,4 +128,4 @@ World.add(world, mouseConstraint);
 render.mouse = mouse;
 
 // fit the render viewport to the scene
-Render.lookAt(render, Composite.allBodies(world));
+// Render.lookAt(render, Composite.allBodies(world));
