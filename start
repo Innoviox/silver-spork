@@ -1,0 +1,4 @@
+cd frontend
+sh ../._start &  PIDIOS=$!
+cd ../server
+sh ../._start &  PIDMIX=$!
