@@ -88,12 +88,7 @@ World.add(world, bodies);
 Events.on(render, "afterRender", () =>
     $("#offscreen").innerHTML = bodies.filter(is_off_screen).map(i => i.id).join(', '));
 
-var setPairsColor = color => event => {
-    for (var pair of event.pairs) {
-        pair.bodyA.render.fillStyle = color;
-        pair.bodyB.render.fillStyle = color;
-    }
-};
+var setPairsColor = color => event => event.pairs.map(pair => [pair.bodyA, pair.bodyB].map(body => body.render.fillStyle = color));
 
 Events.on(engine, 'collisionStart', setPairsColor('#00FF00'));
 Events.on(engine, 'collisionActive', setPairsColor('#FF0000'));
