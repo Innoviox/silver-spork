@@ -26,12 +26,14 @@ var engine = Engine.create({
 engine.world.gravity.y = 0;
 
 // create renderer
+var max_width = 800, max_height = 600;
+
 var render = Render.create({
     element: document.body,
     engine: engine,
     options: {
-        // width: 800,
-        // height: 600,
+        width: max_width,
+        height: max_height,
         showAngleIndicator: true,
         wireframes: false
     }
@@ -43,9 +45,9 @@ Render.run(render);
 var runner = Runner.create();
 Runner.run(runner, engine);
 
-var is_off_screen = body => body.position.x > 800 ||
+var is_off_screen = body => body.position.x > max_width ||
     body.position.x < 0 ||
-    body.position.y > 600 ||
+    body.position.y > max_height ||
     body.position.y < 0;
 
 var bodyStyle = {
@@ -55,21 +57,21 @@ var bodyStyle = {
 
 var wrap = {
     min: {
-        x: 100,
-        y: 100
+        x: 0,
+        y: 0
     },
     max: {
-        x: 500,
-        y: 500
+        x: max_width,
+        y: max_height
     }
 };
 
 var create_body = () => {
     var size = 20; //Common.random(10, 20);
-    return Bodies.rectangle(Common.random(100, 500), Common.random(100, 500), size, size, {
+    return Bodies.rectangle(Common.random(0, max_width), Common.random(0, max_height), size, size, {
         force: {
-            x: (Math.random() - 0.5) / 500,
-            y: (Math.random() - 0.5) / 500
+            x: (Math.random() - 0.5),
+            y: (Math.random() - 0.5)
         },
         render: bodyStyle,
         plugin: {
@@ -83,7 +85,7 @@ var bodies = Array(NUMBER_OF_BODIES).fill().map(create_body);
 
 World.add(world, bodies);
 
-Events.on(render, "afterRender", event =>
+Events.on(render, "afterRender", () =>
     $("#offscreen").innerHTML = bodies.filter(is_off_screen).map(i => i.id).join(', '));
 
 var setPairsColor = color => event => {

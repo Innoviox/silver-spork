@@ -1,13 +1,13 @@
 {
-  "name": "colyseus-starter",
+  "name": "silver-spork",
   "version": "1.0.0",
-  "description": "Colyseus Server - Minimal example",
+  "description": "A collection of games powered by Colyseus",
   "main": "index.js",
   "scripts": {
-    "start": "nodemon ./index.js",
-    "start-production": "node ./index.js"
+    "start": "cd ../frontend && npm run-script build && cd ../server && nodemon ./index.js",
+    "start-production": "cd ../frontend && npm run-script build && cd ../server && node ./index.js"
   },
-  "author": "",
+  "author": "Simon Chervenak",
   "license": "MIT",
   "dependencies": {
     "colyseus": "^0.9.3",
