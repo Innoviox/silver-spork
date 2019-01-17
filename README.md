@@ -1,4 +1,6 @@
 # silver-spork
+[![FOSSA Status](https://app.fossa.io/api/projects/git%2Bgithub.com%2FInnoviox%2Fsilver-spork.svg?type=shield)](https://app.fossa.io/projects/git%2Bgithub.com%2FInnoviox%2Fsilver-spork?ref=badge_shield)
+
 Silver Spork is a collection of party games for you and your friends! Exciting games such as edit readme.md. Batteries not included.
 
  - Mario party - everybody picks a character
@@ -38,3 +40,6 @@ C++ :|
    ```
 
    and open http://localhost:8080 in your browser.
+
+## License
+[![FOSSA Status](https://app.fossa.io/api/projects/git%2Bgithub.com%2FInnoviox%2Fsilver-spork.svg?type=large)](https://app.fossa.io/projects/git%2Bgithub.com%2FInnoviox%2Fsilver-spork?ref=badge_large)
